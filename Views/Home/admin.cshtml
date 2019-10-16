@@ -1,0 +1,58 @@
+@{
+string title = "Admin Home Page";
+List<Recipe> recipes = (List<Recipe>) ViewData["recipes"];
+List<Customer> customers = (List<Customer>)ViewData["customers"];
+<h2>@title</h2>
+<h3>Recipes</h3>
+}
+<form action="/home/adminSearchRecipes" method="get" style="margin-top: 20px">
+    <div class="form-group">
+        <input type="text" name = "SearchText" class="form-control" placeholder="Search Recipes">
+    </div>
+    <input type="submit" class="btn btn-primary" value="Search">
+</form>
+
+<form action="/home/addRecipe" method="get" style="margin-top: 20px">
+    <input type="submit" class="btn btn-primary" value="Add Recipe">
+</form>
+
+<p>
+    <a href="/home/adminAllRecipes">All Recipes</a>
+</p>
+
+
+<h3>Customers</h3>
+
+<form action="/Customers/SearchCustomers" method="get" style="margin-top: 20px">
+    <div class="form-group">
+        <input type="text" name = "SearchText" class="form-control" placeholder="Search Customers">
+    </div>
+    <input type="submit" class="btn btn-primary" value="Search">
+</form>
+
+
+<form action="/customers/addCustomer" method="get" style="margin-top: 20px">
+    <input type="submit" class="btn btn-primary" value="Add New Customer">
+</form>
+
+<p>
+    <a href="/Customers/Index">All Customers</a>
+</p>
+
+
+
+<h3>Orders</h3>
+
+
+<form action="/Orders/SearchOrders" method="get" style="margin-top: 20px">
+    <div class="form-group">
+        <input type="int" name = "SearchInt" class="form-control" placeholder="Search Orders by ID">
+    </div>
+    <input type="submit" class="btn btn-primary" value="Search">
+</form>
+
+<a href="/orders/addOrder" class="btn btn-primary">Add New Order</a>
+
+<p>
+    <a href="/Orders/Index">All Orders</a>
+</p>

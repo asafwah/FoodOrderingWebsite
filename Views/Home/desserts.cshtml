@@ -1,0 +1,36 @@
+@{
+string title = "Desserts";
+List<Recipe> desserts = (List<Recipe>) ViewData["desserts"];
+List<Recipe> recipes = (List<Recipe>) ViewData["recipes"];
+}
+
+<h2>@title</h2>
+<p>List of Desserts</p>
+
+<form action="/home/searchRecipes" method="get" style="margin-top: 20px">
+    <div class="form-group">
+        <input type="text" name = "SearchText" class="form-control" placeholder="Search Recipes">
+    </div>
+    <input type="submit" class="btn btn-primary" value="Search">
+</form>
+
+
+ @for (int i = 0; i < desserts.Count(); i++)
+{
+     <div class="card" style="border: 1px solid lightgrey">
+        <div class="card-body">
+            <h3>@desserts[i].Name</h3>
+            <p>Price: @desserts[i].Description</p>
+            <p>Ingredients: @desserts[i].Ingredients</p>
+            <p>Price: @desserts[i].Price</p>
+            <p>Rating: @desserts[i].Rating</p> 
+            <img src="@desserts[i].PictureUrl" alt="" width="100">       
+        </div>
+        <div class="card-footer">
+            <form action="/home/addToOrder" method="post">
+                <input type="hidden" name="id" value="@desserts[i].Id">
+                <input type="submit" class="btn btn-danger" value="Add To Order">
+            </form>
+        </div>
+     </div>  
+}

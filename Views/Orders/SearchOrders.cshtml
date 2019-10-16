@@ -1,0 +1,43 @@
+@{
+string title = "Admin Search Orders";
+List<Order> orders = (List<Order>) ViewData["orders"];
+
+}
+<h2>@title</h2>
+<p>List of Orders</p>
+@if(orders.Count()==0)
+{
+<h3>No Orders Found</h3>
+}
+<form action="/Orders/SearchOrders" method="get" style="margin-top: 20px">
+    <dive class="form-group">
+        <input type="number" name = "SearchInt" class="form-control" placeholder="Search Orders">
+    </dive>
+    <input type="submit" class="btn btn-primary" value="Search">
+</form>
+
+ @for (int i = 0; i < orders.Count(); i++)
+{
+     <div class="card" style="border: 1px solid lightgrey">
+        <div class="card-body">
+            <h3>@orders[i].Id </h3>
+            <p> ID @orders[i].CreationDate</p>
+            <p>Email: @orders[i].DeleveryDate</p>
+            <p>Password: @orders[i].CustomerId</p>
+            <p>Phone: @orders[i].Status</p>
+            <p>Phone: @orders[i].Cost</p>
+        </div>
+        <div class="card-footer">
+            <form action="/Orders/updateOrder" method="get">
+                <input type="hidden" name="id" value="@orders[i].Id">
+                <input type="submit" class="btn btn-primary" value="Update">
+            </form>
+
+            <form action="/Orders/deleteOrder" method="post">
+                <input type="hidden" name="id" value="@orders[i].Id">
+                <input type="submit" class="btn btn-danger" value="Delete">
+            </form>
+        </div>
+     </div>  
+}
+

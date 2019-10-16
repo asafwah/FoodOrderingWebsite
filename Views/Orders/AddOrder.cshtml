@@ -1,0 +1,24 @@
+@{
+  ViewData["title"] = "Add New Order";
+}
+
+<h1>@ViewData["title"]</h1>
+
+<form action="/Orders/addOrder" method="post">
+    <div class="form-group">
+        <input type="text" name="CreationDate" class="form-control" required placeholder="Order Creation Date">
+    </div>
+    <div class="form-group">
+        <input type="text" name="DeleveryDate" class="form-control" required placeholder="Order Delevery Date">
+    </div>
+    <div class="form-group">
+        <input type="number" name="CustomerId" class="form-control" required placeholder="Order Customer ID">
+    </div>
+    <div class="form-group">
+        <input type="text" name="Status" class="form-control" required placeholder="Order Status">
+    </div>
+    <div class="form-group">
+        <input type="double" name="Cost" class="form-control" required placeholder="Order Cost">
+    </div>
+    <input type="submit" class="btn btn-primary" value="Add Order">
+</form>

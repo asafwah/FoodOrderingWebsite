@@ -1,0 +1,43 @@
+@{
+    var orders = (List<Order>)ViewData["orders"];
+    var recipes = (List<Recipe>)ViewData["recipes"];
+
+    ViewData["title"] = "Admin Orders Page";
+}
+<h2>Orders</h2>
+<form action="/Orders/SearchOrders" method="get" style="margin-top: 20px">
+    <div class="form-group">
+        <input type="int" name = "SearchInt" class="form-control" placeholder="Search Orders by ID">
+    </div>
+    <input type="submit" class="btn btn-primary" value="Search">
+</form>
+
+<a href="/orders/addOrder" class="btn btn-primary">Add New Order</a>
+
+@for (int i = 0; i < orders.Count(); i++)
+{
+     <div class="card" style="border: 2px solid lightgrey">
+        <div class="card-body">
+            <h3>ID: @orders[i].Id</h3>
+            <p>customer ID: @orders[i].CustomerId</p>
+           <p>creationDate: @orders[i].CreationDate</p>
+           <p>Delevery Date: @orders[i].DeleveryDate</p>
+           <p>Status: @orders[i].Status</p>
+           <p>Cost: @orders[i].Cost</p>
+           
+        </div>
+        <div class="card-footer">
+            <form action="/Orders/updateOrder" method="get">
+                <input type="hidden" name="id" value="@orders[i].Id">
+                <input type="submit" class="btn btn-primary" value="Update">
+            </form>
+
+            <form action="/Orders/deleteOrder" method="post">
+                <input type="hidden" name="id" value="@orders[i].Id">
+                <input type="submit" class="btn btn-danger" value="Delete">
+            </form>
+        </div>
+     </div>  
+}
+
+

@@ -1,0 +1,31 @@
+@{
+string title = "Search Recipes Page";
+List<Recipe> recipes = (List<Recipe>) ViewData["recipes"];
+
+}
+<h2>@title</h2>
+<p>List of Recipes</p>
+@if(recipes.Count()==0)
+{
+<h3>No Recipes Found</h3>
+}
+ @for (int i = 0; i < recipes.Count(); i++)
+{
+     <div class="card" style="border: 1px solid lightgrey">
+        <div class="card-body">
+            <h3>@recipes[i].Name</h3>
+            <p>Price: @recipes[i].Description</p>
+            <p>Ingredients: @recipes[i].Ingredients</p>
+            <p>Price: @recipes[i].Price</p>
+            <p>Rating: @recipes[i].Rating</p>
+            <img src="@recipes[i].PictureUrl" alt="" width="100">
+        </div>
+        <div class="card-footer">
+            <form action="/home/addToOrder" method="post">
+                <input type="hidden" name="id" value="@recipes[i].Id">
+                <input type="submit" class="btn btn-danger" value="Add To Order">
+            </form>
+        </div>
+     </div>  
+}
+

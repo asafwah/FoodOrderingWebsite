@@ -1,0 +1,28 @@
+@{
+  ViewData["title"] = "Update Customer";
+  Customer customer = (Customer)ViewData["customer"];
+}
+
+<h1>@ViewData["title"]</h1>
+
+<form action="/Customers/updateCustomer" method="post">
+    <div class="form-group">
+        <input readonly type="number" name="id" value="@customer.Id" class=form-control placeholder="Customer ID">
+    </div>
+    <div class="form-group">
+        <input type="text" name="firstName" value="@customer.FirstName" class=form-control placeholder="Customer First Name">
+    </div>
+    <div class="form-group">
+        <input type="text" name="lastName" value="@customer.LastName" class=form-control placeholder="Customer Last Name">
+    </div>
+    <div class="form-group">
+        <input type="text" name="email" value="@customer.Email" class=form-control placeholder="Customer Email Address">
+    </div>
+    <div class="form-group">
+        <input type="password" name="category" value="@customer.Password" class=form-control placeholder="Customer Password">
+    </div>
+    <div class="form-group">
+        <input type="text" name="phone" value="@customer.Phone" class=form-control placeholder="Customer Phone">
+    </div>
+    <input type="submit" class="btn btn-primary" value="Save">
+</form>

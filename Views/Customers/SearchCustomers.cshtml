@@ -1,0 +1,42 @@
+@{
+string title = "Admin Search Customer";
+List<Customer> customers = (List<Customer>) ViewData["customers"];
+
+}
+<h2>@title</h2>
+<p>List of Customers</p>
+@if(customers.Count()==0)
+{
+<h3>No Recipes Found</h3>
+}
+<form action="/Customers/SearchCustomers" method="get" style="margin-top: 20px">
+    <dive class="form-group">
+        <input type="text" name = "SearchText" class="form-control" placeholder="Search Customers">
+    </dive>
+    <input type="submit" class="btn btn-primary" value="Search">
+</form>
+
+ @for (int i = 0; i < customers.Count(); i++)
+{
+     <div class="card" style="border: 1px solid lightgrey">
+        <div class="card-body">
+            <h3>@customers[i].FirstName @customers[i].LastName</h3>
+            <p> ID @customers[i].Id</p>
+            <p>Email: @customers[i].Email</p>
+            <p>Password: @customers[i].Password</p>
+            <p>Phone: @customers[i].Phone</p>
+        </div>
+        <div class="card-footer">
+            <form action="/Customers/updateCustomer" method="get">
+                <input type="hidden" name="id" value="@customers[i].Id">
+                <input type="submit" class="btn btn-primary" value="Update">
+            </form>
+
+            <form action="/Customers/deleteCustomer" method="post">
+                <input type="hidden" name="id" value="@customers[i].Id">
+                <input type="submit" class="btn btn-danger" value="Delete">
+            </form>
+        </div>
+     </div>  
+}
+

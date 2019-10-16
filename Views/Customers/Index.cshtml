@@ -1,0 +1,44 @@
+@{
+    var customers = (List<Customer>)ViewData["customers"];
+    var addresses = (List<Address>)ViewData["addresses"];
+
+    ViewData["title"] = "Admin Customers Page";
+}
+<h2>Customers</h2>
+<form action="/Customers/SearchCustomers" method="get" style="margin-top: 20px">
+    <div class="form-group">
+        <input type="text" name = "SearchText" class="form-control" placeholder="Search Customers">
+    </div>
+    <input type="submit" class="btn btn-primary" value="Search">
+</form>
+
+<a href="/customers/addCustomer" class="btn btn-primary">Add New Customer</a>
+
+
+
+@for (int i = 0; i < customers.Count(); i++)
+{
+     <div class="card" style="border: 2px solid lightgrey">
+        <div class="card-body">
+            <h3>@customers[i].FirstName @customers[i].LastName</h3>
+            <p>ID: @customers[i].Id</p>
+           <p>Email: @customers[i].Email</p>
+           <p>Phone: @customers[i].Phone</p>
+           
+           
+        </div>
+        <div class="card-footer">
+            <form action="/Customers/updateCustomer" method="get">
+                <input type="hidden" name="id" value="@customers[i].Id">
+                <input type="submit" class="btn btn-primary" value="Update">
+            </form>
+
+            <form action="/Customers/deleteCustomer" method="post">
+                <input type="hidden" name="id" value="@customers[i].Id">
+                <input type="submit" class="btn btn-danger" value="Delete">
+            </form>
+        </div>
+     </div>  
+}
+
+

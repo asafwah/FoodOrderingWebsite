@@ -1,0 +1,42 @@
+@{
+string title = "Admin All Recipes Page";
+List<Recipe> recipes = (List<Recipe>) ViewData["recipes"];
+<h2>@title</h2>
+<p>Recipes</p>
+}
+<form action="/home/adminSearchRecipes" method="get" style="margin-top: 20px">
+    <div class="form-group">
+        <input type="text" name = "SearchText" class="form-control" placeholder="Search Recipes">
+    </div>
+    <input type="submit" class="btn btn-primary" value="Search">
+</form>
+
+<form action="/home/addRecipe" method="get" style="margin-top: 20px">
+    <input type="submit" class="btn btn-primary" value="addRecipe">
+</form>
+
+@for (int i = 0; i < recipes.Count(); i++)
+{
+     <div class="card" style="border: 2px solid lightgrey">
+        <div class="card-body">
+            <h3>@recipes[i].Name</h3>
+            <p>ID: @recipes[i].Id</p>
+           <p>Description: @recipes[i].Description</p>
+           <p>Ingredients: @recipes[i].Ingredients</p>
+           <p>Price: @recipes[i].Price</p>
+           <p>Rating: @recipes[i].Rating</p>
+           <img src="@recipes[i].PictureUrl" alt="" width="100">
+        </div>
+        <div class="card-footer">
+            <form action="/home/updateRecipe" method="get">
+                <input type="hidden" name="id" value="@recipes[i].Id">
+                <input type="submit" class="btn btn-primary" value="Update">
+            </form>
+
+            <form action="/home/deleteRecipe" method="post">
+                <input type="hidden" name="id" value="@recipes[i].Id">
+                <input type="submit" class="btn btn-danger" value="Delete">
+            </form>
+        </div>
+     </div>  
+}

@@ -1,0 +1,50 @@
+﻿@{
+        string title = "Recipes Home Page";
+        string RecipesList = "List of Recipes";
+        var appetizerItem = (Recipe) ViewData["appetizerItem"];
+        var mainCourseItem = (Recipe) ViewData["mainCourseItem"];
+        var dessertItem = (Recipe) ViewData["dessertItem"];
+}
+<h2>@title</h2>
+<p>@RecipesList</p>
+
+<form action="/home/searchRecipes" method="get" style="margin-top: 20px">
+    <div class="form-group">
+        <input type="text" name = "SearchText" class="form-control" placeholder="Search Recipes">
+    </div>
+    <input type="submit" class="btn btn-primary" value="Search">
+</form>
+
+<div class="card" style="margin-top: 20px;">
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">
+        <h3>@appetizerItem.Name</h3>
+        <p>Description: @appetizerItem.Description</p>
+        <p>Ingredients: @appetizerItem.Ingredients</p>
+        <p>Price: @appetizerItem.Price</p>
+        <p>Rating: @appetizerItem.Rating</p>
+        <img src="@appetizerItem.PictureUrl" alt="" width="100"> 
+        <p>
+                <a href="/home/appetizers">Appetizers</a>
+        </p>
+    </li>
+    <li class="list-group-item">
+        <h3>@mainCourseItem.Name</h3>
+        <p>Description: @mainCourseItem.Description</p>
+        <p>Ingredients: @mainCourseItem.Ingredients</p>
+        <p>Price: @mainCourseItem.Price</p>
+        <p>Rating: @mainCourseItem.Rating</p>
+        <img src="@mainCourseItem.PictureUrl" alt="" width="100">
+        <p><a href="/home/mainCourses">Main Courses</a></p>
+    </li>
+    <li class="list-group-item">
+        <h3>@dessertItem.Name</h3>
+        <p>Description: @dessertItem.Description</p>
+        <p>Ingredients: @dessertItem.Ingredients</p>
+        <p>Price: @dessertItem.Price</p>
+        <p>Rating: @dessertItem.Rating</p>
+        <img src="@dessertItem.PictureUrl" alt="" width="100">
+        <p><a href="/home/desserts">Desserts</a></p>
+    </li>
+  </ul>
+</div>

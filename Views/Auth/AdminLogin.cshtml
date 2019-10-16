@@ -1,0 +1,39 @@
+@{
+  var error = (bool)ViewData["error"];
+  var loginSuccessfull = (bool)ViewData["loginSuccessfull"];
+  var adminNotFound = (bool)ViewData["adminNotFound"];
+}
+
+<h2>Admin Login Page</h2>
+
+@if(error)
+{
+  <div class="alert alert-error" role="alert">
+    Something went wrong!
+  </div>
+}
+
+@if(loginSuccessfull)
+{
+  <div class="alert alert-error" role="alert">
+    Logged in!
+  </div>
+}
+
+@if(adminNotFound)
+{
+  <div class="alert alert-error" role="alert">
+    Admin username and/or password are not correct
+  </div>
+}
+
+
+<form action="/auth/adminLogin" method="post">
+  <div class="form-group">
+    <input type="email" class="form-control" name="email" placeholder="Email" required>
+  </div>
+  <div class="form-group">
+    <input type="password" class="form-control" name="password" placeholder="Password" required>
+  </div>
+  <button type="submit" class="btn btn-primary">Login</button>
+</form>

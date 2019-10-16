@@ -1,0 +1,24 @@
+@{
+  ViewData["title"] = "Add New Customer";
+}
+
+<h1>@ViewData["title"]</h1>
+
+<form action="/Customers/addCustomer" method="post">
+    <div class="form-group">
+        <input type="text" name="FirstName" class="form-control" required placeholder="Customer First Name">
+    </div>
+    <div class="form-group">
+        <input type="text" name="LastName" class="form-control" required placeholder="Customer Last Name">
+    </div>
+    <div class="form-group">
+        <input type="text" name="Email" class="form-control" required placeholder="Customer Emaill Address">
+    </div>
+    <div class="form-group">
+        <input type="password" name="Password" class="form-control" required placeholder="Customer Password">
+    </div>
+    <div class="form-group">
+        <input type="text" name="Phone" class="form-control" required placeholder="Customer Phone">
+    </div>
+    <input type="submit" class="btn btn-primary" value="Add Customer">
+</form>
