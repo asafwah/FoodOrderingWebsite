@@ -5,6 +5,7 @@
         var mainCourseItem = (Recipe) ViewData["mainCourseItem"];
         var dessertItem = (Recipe) ViewData["dessertItem"];
 }
+<a href="/Orders/Cart" class="btn btn-primary">My Cart</a>
 <h2>@title</h2>
 <p>@RecipesList</p>
 
@@ -25,7 +26,7 @@
         <p>Rating: @appetizerItem.Rating</p>
         <img src="@appetizerItem.PictureUrl" alt="" width="100"> 
         <p>
-                <a href="/home/appetizers">Appetizers</a>
+                <a href="/home/appetizers">All Appetizers</a>
         </p>
     </li>
     <li class="list-group-item">
@@ -35,7 +36,7 @@
         <p>Price: @mainCourseItem.Price</p>
         <p>Rating: @mainCourseItem.Rating</p>
         <img src="@mainCourseItem.PictureUrl" alt="" width="100">
-        <p><a href="/home/mainCourses">Main Courses</a></p>
+        <p><a href="/home/mainCourses">All Main Courses</a></p>
     </li>
     <li class="list-group-item">
         <h3>@dessertItem.Name</h3>
@@ -44,7 +45,7 @@
         <p>Price: @dessertItem.Price</p>
         <p>Rating: @dessertItem.Rating</p>
         <img src="@dessertItem.PictureUrl" alt="" width="100">
-        <p><a href="/home/desserts">Desserts</a></p>
+        <p><a href="/home/desserts">All Desserts</a></p>
     </li>
   </ul>
 </div>

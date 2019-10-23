@@ -1,0 +1,45 @@
+@{
+  List<Cart> carts = (List<Cart>) ViewData["carts"];
+  ViewData["title"] = "My Cart";
+  
+}
+
+<h2>@ViewData["title"]</h2>
+<a href="/Home/allRecipes" class="btn btn-primary">Continue Shopping </a>
+
+@for (int i = 0; i < carts.Count(); i++)
+{
+    
+     <div class="card" style="border: 2px solid lightgrey">
+        <div class="card-body">
+            <h3>@carts[i].RecipeName</h3>
+            <img src="@carts[i].PictureUrl" alt="" width="100">
+           <p>Price: @carts[i].Price</p>
+           <p>Quantity: @carts[i].Quantity</p>
+           <p>Total Price: @carts[i].TotalPrice</p>
+           <p>Status: @carts[i].Status</p>
+        </div>
+        <div class="card-footer">
+
+            <form action="/Orders/deleteCart" method="post">
+                <input type="hidden" name="id" value="@carts[i].Id">
+                <input type="submit" class="btn btn-danger" value="Delete">
+            </form>
+            
+        </div>
+     </div>  
+}
+@if (carts.Count()==0)
+{
+    <h2>Your Cart is Empty</h2>
+}
+else 
+{
+    int customerId = @carts[0].CustomerId;
+    <form action="/Orders/OrderCart" method="post">
+        <div class="form-group">
+            <input type="hidden" name="id" value="@customerId">
+        </div>
+        <input type="submit" class="btn btn-primary" value="Order">
+    </form>
+}

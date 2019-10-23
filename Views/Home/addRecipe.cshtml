@@ -1,32 +1,32 @@
 @{
-  ViewData["title"] = "Add New Recipe";
+  ViewData["title"] = "Add New Recipe";
 }
 
 <h1>@ViewData["title"]</h1>
 
-<form action="/home/addRecipe" method="post" enctype="multipart/form-data">
-    <div class="form-group">
-        <input type="text" name="name" class="form-control" required placeholder="Recipe Name">
-    </div>
-    <div class="form-group">
-        <input type="text" name="description" class="form-control" required placeholder="Recipe Description">
-    </div>
-    <div class="form-group">
-        <input type="text" name="ingredients" class="form-control" required placeholder="Recipe Ingredients">
-    </div>
-    <div class="form-group">
+<form action="/home/addRecipe" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <input type="text" name="name" class="form-control" required placeholder="Recipe Name">
+    </div>
+    <div class="form-group">
+        <input type="text" name="description" class="form-control" required placeholder="Recipe Description">
+    </div>
+    <div class="form-group">
+        <input type="text" name="ingredients" class="form-control" required placeholder="Recipe Ingredients">
+    </div>
+    <div class="form-group">
+        <input type="double" name="price" class="form-control" required placeholder="Recipe Price">
+    </div>
+    <div class="form-group">
+        <input type="double" name="rating" class="form-control" placeholder="Recipe Rating">
+    </div>
+    <div class="form-group">
+    <input type="file" class="form-control" name="picture" placeholder="Picture">
+    </div>
+    <div class="form-group">  
         <input type="radio" name="category" value="Appetizer" checked> Appetizer<br>
         <input type="radio" name="category" value="MainCourse"> Main Course<br>
         <input type="radio" name="category" value="Dessert"> Dessert<br><br>
-    </div>
-    <div class="form-group">
-        <input type="double" name="price" class="form-control" required placeholder="Recipe Price">
-    </div>
-    <div class="form-group">
-        <input type="double" name="rating" class="form-control" placeholder="Recipe Rating">
-    </div>
-    <div class="form-group">
-    <input type="file" class="form-control" name="picture" placeholder="Picture">
-    </div>
-    <input type="submit" class="btn btn-primary" value="Add Recipe">
+    </div>
+    <input type="submit" class="btn btn-primary" value="Add Recipe">
 </form>

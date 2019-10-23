@@ -3,6 +3,7 @@ string title = "Appetizers";
 List<Recipe> appetizers = (List<Recipe>) ViewData["appetizers"];
 List<Recipe> recipes = (List<Recipe>) ViewData["recipes"];
 }
+<a href="/Orders/Cart" class="btn btn-primary">My Cart</a>
 
 <h2>@title</h2>
 <p>List of Appetizers</p>
@@ -20,6 +21,7 @@ List<Recipe> recipes = (List<Recipe>) ViewData["recipes"];
      <div class="card" style="border: 1px solid lightgrey">
         <div class="card-body">
             <h3>@appetizers[i].Name</h3>
+            <p>Category: @appetizers[i].Category</p>
             <p>Price: @appetizers[i].Description</p>
             <p>Ingredients: @appetizers[i].Ingredients</p>
             <p>Price: @appetizers[i].Price</p>
@@ -27,9 +29,9 @@ List<Recipe> recipes = (List<Recipe>) ViewData["recipes"];
             <img src="@appetizers[i].PictureUrl" alt="" width="100">       
         </div>
         <div class="card-footer">
-            <form action="/home/addToOrder" method="post">
+            <form action="/Orders/addToCart" method="post">
                 <input type="hidden" name="id" value="@appetizers[i].Id">
-                <input type="submit" class="btn btn-danger" value="Add To Order">
+                <input type="submit" class="btn btn-primary" value="Add To My Cart">
             </form>
         </div>
      </div>  

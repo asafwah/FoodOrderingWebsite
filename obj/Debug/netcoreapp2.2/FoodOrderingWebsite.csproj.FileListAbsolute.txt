@@ -49,3 +49,4 @@
 /Users/asafwah/Desktop/FoodOrderingWebsite/obj/Debug/netcoreapp2.2/Razor/Views/Auth/Login.g.cshtml.cs
 /Users/asafwah/Desktop/FoodOrderingWebsite/obj/Debug/netcoreapp2.2/Razor/Views/Auth/Register.g.cshtml.cs
 /Users/asafwah/Desktop/FoodOrderingWebsite/obj/Debug/netcoreapp2.2/Razor/Views/Auth/AdminLogin.g.cshtml.cs
+/Users/asafwah/Desktop/FoodOrderingWebsite/obj/Debug/netcoreapp2.2/Razor/Views/Orders/Cart.g.cshtml.cs

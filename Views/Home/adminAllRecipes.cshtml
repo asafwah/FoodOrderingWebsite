@@ -21,6 +21,7 @@ List<Recipe> recipes = (List<Recipe>) ViewData["recipes"];
         <div class="card-body">
             <h3>@recipes[i].Name</h3>
             <p>ID: @recipes[i].Id</p>
+            <p>Category: @recipes[i].Category</p>
            <p>Description: @recipes[i].Description</p>
            <p>Ingredients: @recipes[i].Ingredients</p>
            <p>Price: @recipes[i].Price</p>

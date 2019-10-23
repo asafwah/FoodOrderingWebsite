@@ -142,30 +142,42 @@ namespace FoodOrderingWebsite.Controllers
         //
 
          [HttpPost]
-        public IActionResult addRecipe(string name, string description, string ingredients, string category, double price, IFormFile picture)
-        { 
-          string pictureUrl = null;
-          if(picture.Length > 0)
-          {
-            var fileName = Path.GetFileName(picture.FileName);
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot/images", fileName);
-            var stream = new FileStream(filePath, FileMode.Create);
-            picture.CopyTo(stream);
-            pictureUrl = "/images/" + fileName;
+        public IActionResult addRecipe(string name, string description, string ingredients, string category, double price, double rating, IFormFile picture)
+        {
+
+            var user = HttpContext.Session.GetString("user");
+            if(user == "admin")
+            {
+                string pictureUrl = null;
+                if(picture.Length > 0)
+                {
+                    var fileName = Path.GetFileName(picture.FileName);
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot/images", fileName);
+                    var stream = new FileStream(filePath, FileMode.Create);
+                    picture.CopyTo(stream);
+                    pictureUrl = "/images/" + fileName;
+                    }
+
+                    Recipe newrecipe = new Recipe();
+                    newrecipe.Name = name;
+                    newrecipe.Description = description;
+                    newrecipe.Ingredients = ingredients;
+                    newrecipe.Category = category;             
+                    newrecipe.Price = price;
+                    newrecipe.Rating = rating;              
+                    newrecipe.PictureUrl = pictureUrl;
+
+                    FoodOrdering fo = new FoodOrdering();
+
+                fo.addRecipeToDB(newrecipe);
+                    return Redirect("/home/admin");
+
+                }
+            else
+            {
+                return Redirect("/auth/adminLogin");
             }
 
-            Recipe newrecipe = new Recipe();
-            newrecipe.Name = name;
-            newrecipe.Description = description;
-            newrecipe.Ingredients = ingredients;
-            newrecipe.Category = category;             
-            newrecipe.Price = price;               
-            newrecipe.PictureUrl = pictureUrl;
-
-            FoodOrdering fo = new FoodOrdering();
-
-           fo.addRecipeToDB(newrecipe);
-            return Redirect("/home/admin");
         }
         public IActionResult UpdateRecipe(int id)
         {
@@ -182,28 +194,51 @@ namespace FoodOrderingWebsite.Controllers
             }
         }
         [HttpPost]
-        public RedirectResult UpdateRecipe(int id, string name, string description, string ingredients, string category, double price, double rating, IFormFile picture)
+        public RedirectResult UpdateRecipe(int id, string name, string description, string ingredients, string category, double price, double rating, IFormFile picture, string oldPictureUrl)
         {
-            string pictureUrl = null;
-            if(picture.Length > 0)
+            var user = HttpContext.Session.GetString("user");
+            if(user == "admin")
             {
-            var fileName = Path.GetFileName(picture.FileName);
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot/images", fileName);
-            var stream = new FileStream(filePath, FileMode.Create);
-            picture.CopyTo(stream);
-            pictureUrl = "/images/" + fileName;
+                string pictureUrl = null;
+                if (picture == null)
+                {
+                    pictureUrl =oldPictureUrl;
+                }
+                else if(picture.Length > 0)
+                {
+                var fileName = Path.GetFileName(picture.FileName);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot/images", fileName);
+                var stream = new FileStream(filePath, FileMode.Create);
+                picture.CopyTo(stream);
+                pictureUrl = "/images/" + fileName;
+                }
+                FoodOrdering fo = new FoodOrdering();
+                fo.UpdateRecipe(id,name,description,ingredients, category, price, rating, pictureUrl);
+                return Redirect("/home/admin");
+                }
+            else
+            {
+                return Redirect("/auth/adminLogin");
             }
-            FoodOrdering fo = new FoodOrdering();
-            fo.UpdateRecipe(id,name,description,ingredients, category, price, rating, pictureUrl);
-            return Redirect("/home/admin");
+            
         }
         public RedirectResult DeleteRecipe(int id)
         {
-            FoodOrdering os = new FoodOrdering();
-            os.deleteRecipe(id);
-            return Redirect("/home/admin");
+            var user = HttpContext.Session.GetString("user");
+            if(user == "admin")
+            {
+                FoodOrdering fo = new FoodOrdering();
+                fo.deleteRecipe(id);
+                return Redirect("/home/admin");
+            }
+            else
+            {
+                return Redirect("/auth/adminLogin");
+            }
+            
         }
-
+        
+        
 
         public IActionResult Privacy()
         {

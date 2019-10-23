@@ -1,7 +1,6 @@
 @{
     var orders = (List<Order>)ViewData["orders"];
-    var recipes = (List<Recipe>)ViewData["recipes"];
-
+    var allOrderRecipes = (List<OrderRecipes>)ViewData["allOrderRecipes"];
     ViewData["title"] = "Admin Orders Page";
 }
 <h2>Orders</h2>
@@ -19,11 +18,21 @@
      <div class="card" style="border: 2px solid lightgrey">
         <div class="card-body">
             <h3>ID: @orders[i].Id</h3>
-            <p>customer ID: @orders[i].CustomerId</p>
-           <p>creationDate: @orders[i].CreationDate</p>
+            <p>Customer ID: @orders[i].CustomerId</p>
+           <p>CreationDate: @orders[i].CreationDate</p>
            <p>Delevery Date: @orders[i].DeleveryDate</p>
            <p>Status: @orders[i].Status</p>
            <p>Cost: @orders[i].Cost</p>
+            <h3>Order Recipes: </h3>
+           @for (int e = 0; e < allOrderRecipes.Count(); e++)
+           {
+
+                if (@allOrderRecipes[e].OrderId == @orders[i].Id)
+                {
+                        <h3>@allOrderRecipes[e].RecipeName</h3>
+                        <p>Quantity: @allOrderRecipes[e].Quantity</p>
+                }
+           }
            
         </div>
         <div class="card-footer">

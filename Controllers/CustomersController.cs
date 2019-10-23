@@ -14,82 +14,139 @@ namespace FoodOrderingWebsite.Controllers
     {
         public IActionResult Index()
         {
-            FoodOrdering fo = new FoodOrdering();
-            ViewData["customers"] = fo.getCustomersFromDB();
-            return View();
+            var user = HttpContext.Session.GetString("user");
+            if(user == "admin")
+            {
+                FoodOrdering fo = new FoodOrdering();
+                ViewData["customers"] = fo.getCustomersFromDB();
+                return View();
+            }
+            else
+            {
+                return Redirect("/auth/adminLogin");
+            }
+            
         }
 
         
         public IActionResult SearchCustomers(string SearchText)
         {
-            FoodOrdering fo = new FoodOrdering();
-            ViewData["customers"] = fo.searchCustomersByName(SearchText);
-            return View();
+            var user = HttpContext.Session.GetString("user");
+            if(user == "admin")
+            {
+                FoodOrdering fo = new FoodOrdering();
+                ViewData["customers"] = fo.searchCustomersByName(SearchText);
+                return View();
+            }
+            else
+            {
+                return Redirect("/auth/adminLogin");
+            }
+            
         }
         
         [HttpGet]
         public IActionResult addCustomer()
         {
-            return View();
+            var user = HttpContext.Session.GetString("user");
+            if(user == "admin")
+            {
+                return View();
+            }
+            else
+            {
+                return Redirect("/auth/adminLogin");
+            }
+            
         }
 
         [HttpPost]
         public RedirectResult addCustomer(IFormCollection formCollection)
         {
-
-            Customer newcustomer = new Customer();
-            foreach (var item in formCollection)
+            var user = HttpContext.Session.GetString("user");
+            if(user == "admin")
             {
-                if(item.Key == "FirstName")
+                Customer newcustomer = new Customer();
+                foreach (var item in formCollection)
                 {
-                    newcustomer.FirstName = item.Value;
+                    if(item.Key == "FirstName")
+                    {
+                        newcustomer.FirstName = item.Value;
+                    }
+                    if(item.Key == "LastName")
+                    {
+                        newcustomer.LastName = item.Value;
+                    }
+                    if(item.Key == "Email")
+                    {
+                        newcustomer.Email = item.Value;
+                    }
+                    if(item.Key == "Password")
+                    {
+                        newcustomer.Password = item.Value;
+                    }
+                    if(item.Key == "Phone")
+                    {
+                        newcustomer.Phone = item.Value;
+                    }
                 }
-                if(item.Key == "LastName")
-                {
-                    newcustomer.LastName = item.Value;
-                }
-                if(item.Key == "Email")
-                {
-                    newcustomer.Email = item.Value;
-                }
-                if(item.Key == "Password")
-                {
-                    newcustomer.Password = item.Value;
-                }
-                if(item.Key == "Phone")
-                {
-                    newcustomer.Phone = item.Value;
-                }
-
+                FoodOrdering fo = new FoodOrdering();
+                fo.addCustomerToDB(newcustomer);
+                return Redirect("/Customers/Index");
+            }
+            else
+            {
+                return Redirect("/auth/adminLogin");
             }
 
-            FoodOrdering fo = new FoodOrdering();
-
-           fo.addCustomerToDB(newcustomer);
-            return Redirect("/Customers/Index");
+            
         }
         
         public RedirectResult DeleteCustomer(int id)
         {
-            FoodOrdering os = new FoodOrdering();
-            os.deleteCustomer(id);
-            return Redirect("/Customers/Index");
+            var user = HttpContext.Session.GetString("user");
+            if(user == "admin")
+            {
+                FoodOrdering os = new FoodOrdering();
+                os.deleteCustomer(id);
+                return Redirect("/Customers/Index");
+            }
+            else
+            {
+                return Redirect("/auth/adminLogin");
+            }
+
+
+            
         }
         public IActionResult UpdateCustomer(int id)
         {
-            FoodOrdering fo = new FoodOrdering();
-            ViewData["customer"]= fo.getCustomer(id);
-            return View();
+            var user = HttpContext.Session.GetString("user");
+            if(user == "admin")
+            {
+                FoodOrdering fo = new FoodOrdering();
+                ViewData["customer"]= fo.getCustomer(id);
+                return View();
+            }
+            else
+            {
+                return Redirect("/auth/adminLogin");
+            }
         }
         [HttpPost]
         public RedirectResult UpdateCustomer(int id, string firstName, string lastName, string email, string password, string phone)
         {
-            FoodOrdering fo = new FoodOrdering();
-            fo.UpdateCustomer(id,firstName,lastName,email, password, phone);
-            return Redirect("/Customers/Index");
-        }
-
-        
-        
+            var user = HttpContext.Session.GetString("user");
+            if(user == "admin")
+            {
+                FoodOrdering fo = new FoodOrdering();
+                fo.UpdateCustomer(id,firstName,lastName,email, password, phone);
+                return Redirect("/Customers/Index");
+            }
+            else
+            {
+                return Redirect("/auth/adminLogin");
+            }
+        }        
     }
 }

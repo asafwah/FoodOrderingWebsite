@@ -2,10 +2,9 @@
   ViewData["title"] = "Update Order";
   Order order = (Order)ViewData["order"];
 }
-
 <h1>@ViewData["title"]</h1>
 
-<form action="/Orders/updateOrder" method="post">
+<form action="/Orders/updateOrder" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <input readonly type="number" name="id" value="@order.Id" class=form-control placeholder="Order ID">
     </div>
@@ -19,10 +18,37 @@
         <input type="number" name="CustomerId" value="@order.CustomerId" class=form-control placeholder="Order Customer Id">
     </div>
     <div class="form-group">
-        <input type="text" name="Status" value="@order.Status" class=form-control placeholder="Order Status">
-    </div>
-    <div class="form-group">
         <input type="double" name="Cost" value="@order.Cost" class=form-control placeholder="Order Cost">
     </div>
+
+    
+    
+
+
+    @if (@order.Status=="Ready")
+    {
+        <div class="form-group">  
+        <input type="radio" name="Status" value="Pending"> Pending<br>
+        <input type="radio" name="Status" value="Approved"> Approved<br>
+        <input type="radio" name="Status" value="Ready"checked> Ready<br><br>
+        </div> 
+    }
+    else if (@order.Status=="Approved")
+    {
+        <div class="form-group">  
+        <input type="radio" name="Status" value="Pending"> Pending<br>
+        <input type="radio" name="Status" value="Approved" checked> Approved<br>
+        <input type="radio" name="Status" value="Ready"> Ready<br><br>
+        </div> 
+    }
+    else
+    {
+        <div class="form-group">  
+        <input type="radio" name="Status" value="Pending" checked> Pending<br>
+        <input type="radio" name="Status" value="Approved"> Approved<br>
+        <input type="radio" name="Status" value="Ready"> Ready<br><br>
+        </div> 
+    }
+
     <input type="submit" class="btn btn-primary" value="Save">
 </form>

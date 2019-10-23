@@ -1,9 +1,14 @@
 @{
+
 string title = "All Recipes";
 List<Recipe> recipes = (List<Recipe>) ViewData["recipes"];
+//string LoginPreviousUrl = "/home/allRecipes";
+}
+
+<a href="/Orders/Cart" class="btn btn-primary">My Cart</a>
 <h2>@title</h2>
 <p>Recipes</p>
-}
+
 <form action="/home/adminSearchRecipes" method="get" style="margin-top: 20px">
     <div class="form-group">
         <input type="text" name = "SearchText" class="form-control" placeholder="Search Recipes">
@@ -17,7 +22,7 @@ List<Recipe> recipes = (List<Recipe>) ViewData["recipes"];
      <div class="card" style="border: 1px solid lightgrey">
         <div class="card-body">
             <h3>@recipes[i].Name</h3>
-            <p>ID: @recipes[i].Id</p>
+            <p>Category: @recipes[i].Category</p>
            <p>Description: @recipes[i].Description</p>
            <p>Ingredients: @recipes[i].Ingredients</p>
            <p>Price: @recipes[i].Price</p>
@@ -25,9 +30,9 @@ List<Recipe> recipes = (List<Recipe>) ViewData["recipes"];
            <img src="@recipes[i].PictureUrl" alt="" width="100">
         </div>
         <div class="card-footer">
-            <form action="/home/addToOrder" method="post">
+            <form action="/Orders/addToCart" method="post">
                 <input type="hidden" name="id" value="@recipes[i].Id">
-                <input type="submit" class="btn btn-danger" value="Add To Order">
+                <input type="submit" class="btn btn-primary" value="Add To My Cart">
             </form>
         </div>
         </div> 
