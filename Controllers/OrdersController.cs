@@ -14,15 +14,37 @@ namespace FoodOrderingWebsite.Controllers
     {
         public IActionResult Index()
         {
+            var user = HttpContext.Session.GetString("user");
+            if(user == "admin")
+            {
             FoodOrdering fo = new FoodOrdering();
             ViewData["orders"] = fo.getOrdersFromDB();
             ViewData["allOrderRecipes"] = fo.getAllOrderRecipesFromDB();
             return View();
+            }
+            else
+            {
+                return Redirect("/auth/adminLogin");
+            }
         }
-
+        public IActionResult MyOrders()
+        {
+            var user = HttpContext.Session.GetString("user");
+            if(user == null)
+            {
+                return Redirect("/auth/Login");
+            }
+            else
+            {
+                FoodOrdering fo = new FoodOrdering();
+                int customerId = fo.GetCustomerId(user);
+                ViewData["myOrders"] = fo.getMyOrdersFromDB(customerId);
+                ViewData["allOrderRecipes"] = fo.getAllOrderRecipesFromDB();
+                return View();
+            }       
+        }
         public IActionResult Cart()
         {
-
             var user = HttpContext.Session.GetString("user");
             if(user == null)
             {
@@ -36,26 +58,42 @@ namespace FoodOrderingWebsite.Controllers
                 ViewData["carts"] = fo.GetCustomerCart(CustomerId);
                 return View();
             }       
-        }
-
-        
+        }       
         public IActionResult SearchOrders(int SearchInt)
         {
+            var user = HttpContext.Session.GetString("user");
+            if(user == "admin")
+            {
             FoodOrdering fo = new FoodOrdering();
             ViewData["orders"] = fo.searchOrderById(SearchInt);
             return View();
+            }
+            else
+            {
+                return Redirect("/auth/adminLogin");
+            }
         }
         
         [HttpGet]
         public IActionResult addOrder()
         {
-            return View();
+            var user = HttpContext.Session.GetString("user");
+            if(user == "admin")
+            {
+                return View();
+            }
+            else
+            {
+                return Redirect("/auth/adminLogin");
+            }
         }
 
         [HttpPost]
         public RedirectResult addOrder(IFormCollection formCollection)
         {
-
+            var user = HttpContext.Session.GetString("user");
+            if(user == "admin")
+            {
             Order neworder = new Order();
             foreach (var item in formCollection)
             {
@@ -79,40 +117,116 @@ namespace FoodOrderingWebsite.Controllers
                 {
                     neworder.Cost  = double.Parse(item.Value);
                 }
-
             }
-
             FoodOrdering fo = new FoodOrdering();
 
            fo.addOrderToDB(neworder);
             return Redirect("/Orders/Index");
+            }
+            else
+            {
+                return Redirect("/auth/adminLogin");
+            }
         }
         [HttpPost]
         public RedirectResult DeleteOrder(int id)
         {
+            var user = HttpContext.Session.GetString("user");
+            if(user == "admin")
+            {
+                FoodOrdering os = new FoodOrdering();
+                os.deleteOrder(id);
+                return Redirect("/Orders/Index");
+            }
+            else
+            {
+                return Redirect("/auth/adminLogin");
+            }
+        }
+        
+        [HttpPost]
+        public RedirectResult deleteMyOrder(int id)
+        {
+            var user = HttpContext.Session.GetString("user");
+            if(user == null)
+            {
+                return Redirect("/auth/Login");
+            }
+            else
+            {
             FoodOrdering os = new FoodOrdering();
             os.deleteOrder(id);
-            return Redirect("/Orders/Index");
+            return Redirect("/Orders/MyOrders");
+            }
         }
+
         public IActionResult UpdateOrder(int id)
+        {
+
+            var user = HttpContext.Session.GetString("user");
+            if(user == "admin")
+            {
+                FoodOrdering fo = new FoodOrdering();
+                ViewData["order"]= fo.getOrder(id);
+                return View();
+            }
+            else
+            {
+                return Redirect("/auth/adminLogin");
+            }
+        }
+        [HttpPost]
+        public RedirectResult UpdateOrder(int id, string creationDate, string deleveryDate, int customerId, string status, double cost)
+        {
+
+            var user = HttpContext.Session.GetString("user");
+            if(user == "admin")
+            {
+                FoodOrdering fo = new FoodOrdering();
+                fo.UpdateOrder(id,creationDate,deleveryDate,customerId,status,cost);
+                return Redirect("/Orders/Index");
+            }
+            else
+            {
+                return Redirect("/auth/adminLogin");
+            }
+        }
+        public IActionResult UpdateMyOrder(int id)
         {
             FoodOrdering fo = new FoodOrdering();
             ViewData["order"]= fo.getOrder(id);
             return View();
         }
         [HttpPost]
-        public RedirectResult UpdateOrder(int id, string creationDate, string deleveryDate, int customerId, string status, double cost)
+        public RedirectResult updateMyOrder(int id, string deleveryDate)
         {
+            var user = HttpContext.Session.GetString("user");
+            if(user == null)
+            {
+                return Redirect("/auth/Login");
+            }
+            else
+            {
             FoodOrdering fo = new FoodOrdering();
-            fo.UpdateOrder(id,creationDate,deleveryDate,customerId,status,cost);
-            return Redirect("/Orders/Index");
+            fo.UpdateMyOrder(id, deleveryDate);
+            return Redirect("/Orders/MyOrders");
+            }
         }
+
         [HttpPost]
         public RedirectResult DeleteCart(int id)
         {
+            var user = HttpContext.Session.GetString("user");
+            if(user == null)
+            {
+                return Redirect("/auth/Login");
+            }
+            else
+            {
             FoodOrdering os = new FoodOrdering();
             os.deleteCart(id);
             return Redirect("/Orders/Cart");
+            }
         }
         [HttpPost]
         public RedirectResult addToCart(int id)
@@ -131,14 +245,10 @@ namespace FoodOrderingWebsite.Controllers
                 return Redirect("/home/allRecipes");
                 //ViewData["recipes"] = fo.searchRecipeByName(SearchText);
                 //return View();
-            }
-            
-        }
-        
-
-        
+            }            
+        }        
         [HttpPost]
-        public RedirectResult OrderCart(int id)
+        public RedirectResult OrderCart(int customerId)
         {
             var user = HttpContext.Session.GetString("user");
             if(user == null)
@@ -148,13 +258,13 @@ namespace FoodOrderingWebsite.Controllers
             else
             {
                 FoodOrdering fo = new FoodOrdering();
-                List<Cart> carts = fo.GetCustomerCart(id);
-                Customer customer = fo.getCustomer(id);
+                List<Cart> carts = fo.GetCustomerCart(customerId);
+                Customer customer = fo.getCustomer(customerId);
                 Order neworder = new Order();
                 //how to add customerId to below number?
                 //int orderId=Int32.Parse(DateTime.Now.ToString("yyyyMMddHHmmss"));
                 //neworder.Id=orderId;
-                neworder.CustomerId= id;
+                neworder.CustomerId= customerId;
                 neworder.CreationDate=DateTime.Now.Date.ToString();
                 neworder.DeleveryDate=DateTime.Today.AddDays(2).ToString();
                 neworder.Status="Pending";
@@ -168,22 +278,14 @@ namespace FoodOrderingWebsite.Controllers
                 int lastOrderId=fo.getLastOrderIdfroDB();
                 foreach (var item in carts)
                 {
-                    fo.AddRecipeToOrderRecipe(lastOrderId, item.RecipeId, item.Quantity, item.RecipeName);
+                    fo.AddRecipeToOrderRecipe(lastOrderId, customerId, item.RecipeId, item.Quantity, item.RecipeName);
                     tempTotalPrice= tempTotalPrice + item.TotalPrice;
                 }
-                fo.clearCustomerCart(id);
+                fo.clearCustomerCart(customerId);
                 
                 //fo.emptyCart(customerId);
                 return Redirect("/home/Index");
-
-            }  
-
-
-            
-        }
-        
-
-        
-        
+            }
+        }        
     }
 }

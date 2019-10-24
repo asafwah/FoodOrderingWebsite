@@ -50,3 +50,5 @@
 /Users/asafwah/Desktop/FoodOrderingWebsite/obj/Debug/netcoreapp2.2/Razor/Views/Auth/Register.g.cshtml.cs
 /Users/asafwah/Desktop/FoodOrderingWebsite/obj/Debug/netcoreapp2.2/Razor/Views/Auth/AdminLogin.g.cshtml.cs
 /Users/asafwah/Desktop/FoodOrderingWebsite/obj/Debug/netcoreapp2.2/Razor/Views/Orders/Cart.g.cshtml.cs
+/Users/asafwah/Desktop/FoodOrderingWebsite/obj/Debug/netcoreapp2.2/Razor/Views/Orders/MyOrders.g.cshtml.cs
+/Users/asafwah/Desktop/FoodOrderingWebsite/obj/Debug/netcoreapp2.2/Razor/Views/Orders/UpdateMyOrder.g.cshtml.cs

@@ -1,0 +1,54 @@
+@{
+  ViewData["title"] = "Update My Order";
+  Order order = (Order)ViewData["order"];
+}
+<h1>@ViewData["title"]</h1>
+
+<form action="/Orders/updateMyOrder" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <input hidden type="number" name="id" value="@order.Id" class=form-control placeholder="Order ID">
+    </div>
+    <div class="form-group">
+        <p>Creation Date: </p>
+        <input readonly type="text" name="CreationDate" value="@order.CreationDate" class=form-control placeholder="Order Creation Date">
+    </div>
+    <div class="form-group">
+        <p>Delevery Date: </p>
+        <input type="text" name="DeleveryDate" value="@order.DeleveryDate" class=form-control placeholder="Order Delevery Date">
+    </div>
+    <div class="form-group">
+        <input hidden type="number" name="CustomerId" value="@order.CustomerId" class=form-control placeholder="Order Customer Id">
+    </div>    
+    <div class="form-group">
+        <p>Cost: </p>
+        <input readonly type="double" name="Cost" value="@order.Cost" class=form-control placeholder="Order Cost">
+    </div>
+<p>Status: </p>
+    @if (@order.Status=="Ready")
+    {
+        <div class="form-group">  
+        <input disabled type="radio" name="Status" value="Pending"> Pending<br>
+        <input disabled type="radio" name="Status" value="Approved"> Approved<br>
+        <input disabled type="radio" name="Status" value="Ready"checked> Ready<br><br>
+        </div> 
+    }
+    else if (@order.Status=="Approved")
+    {
+        <div class="form-group">  
+        <input disabled type="radio" name="Status" value="Pending"> Pending<br>
+        <input disabled type="radio" name="Status" value="Approved" checked> Approved<br>
+        <input disabled type="radio" name="Status" value="Ready"> Ready<br><br>
+        </div> 
+    }
+    else
+    {
+        <div class="form-group">  
+        <input disabled type="radio" name="Status" value="Pending" checked> Pending<br>
+        <input disabled type="radio" name="Status" value="Approved"> Approved<br>
+        <input disabled type="radio" name="Status" value="Ready"> Ready<br><br>
+        </div> 
+    }
+
+    <input type="submit" class="btn btn-primary" value="Save">
+</form>
+    

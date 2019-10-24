@@ -344,6 +344,7 @@ namespace FoodOrderingWebsite.Models
              {
               OrderRecipes o = new OrderRecipes();
               o.Id = Convert.ToInt32(result["id"]);
+              o.CustomerId= Convert.ToInt32(result["customerId"]);
               o.OrderId = Convert.ToInt32(result["orderId"]);
               o.RecipeId = Convert.ToInt32(result["recipeId"]);
               o.Quantity = Convert.ToInt32(result["quantity"]);
@@ -462,6 +463,35 @@ namespace FoodOrderingWebsite.Models
           con.Close();
           return orders;
         }
+
+        public List<Order> getMyOrdersFromDB(int customerId)
+        {
+          List<Order> myOrders = new List<Order>();
+
+          // creating and opening the mysql connection
+          var con = this.CreateConnection();
+
+          // creating the mysql command/query that I want to run
+          MySqlCommand cmd = new MySqlCommand($"select * from orders where customerId={customerId}", con);
+
+          // executy the command
+          var result = cmd.ExecuteReader();
+
+          while(result.Read())
+          {
+            Order order = new Order();
+            order.Id = Convert.ToInt32(result["id"]);
+            order.CreationDate = result["creationDate"].ToString();
+            order.DeleveryDate = result["deleveryDate"].ToString();
+            order.CustomerId = Convert.ToInt32(result["customerId"]);
+            order.Status = result["status"].ToString();
+            order.Cost = Convert.ToDouble(result["cost"]);
+            myOrders.Add(order);
+          } 
+          con.Close();
+          return myOrders;
+        }
+
         
         
         public Order getOrder(int id)
@@ -509,11 +539,11 @@ namespace FoodOrderingWebsite.Models
              return orders;
         }
 
-        public void AddRecipeToOrderRecipe(int orderId, int recipeId, int quantity, string recipeName)
+        public void AddRecipeToOrderRecipe(int orderId, int customerId, int recipeId, int quantity, string recipeName)
          {
            var con = this.CreateConnection();
             // creating the mysql command/query that I want to run
-              MySqlCommand cmd = new MySqlCommand($"insert into orderRecipes (orderId, recipeId, quantity, recipeName) values ({orderId}, {recipeId}, {quantity}, '{recipeName}');", con);
+              MySqlCommand cmd = new MySqlCommand($"insert into orderRecipes (orderId, customerId, recipeId, quantity, recipeName) values ({orderId}, {customerId}, {recipeId}, {quantity}, '{recipeName}');", con);
              cmd.ExecuteNonQuery();
              con.Close();
          }
@@ -550,10 +580,30 @@ namespace FoodOrderingWebsite.Models
             cmd2.ExecuteNonQuery();
             con.Close();
         }
+        public void deleteCustomerOrders(int customerId)
+        {
+            var con = this.CreateConnection();
+            string cmdText1= $"DELETE orderRecipes FROM orderRecipes INNER JOIN orders ON orderRecipes.orderId = orders.id WHERE orders.customerId= {customerId}";
+            MySqlCommand cmd1 = new MySqlCommand(cmdText1,con);
+            cmd1.ExecuteNonQuery();
+            string cmdText2= $"delete from orders where customerId = {customerId}";
+            MySqlCommand cmd2 = new MySqlCommand(cmdText2,con);
+            cmd2.ExecuteNonQuery();
+            con.Close();
+        }
         public void UpdateOrder(int id, string creationDate, string deleveryDate, int customerId, string status, double cost)
          {
             var con = this.CreateConnection();
             string cmdText= $"update orders set creationDate='{creationDate}', deleveryDate='{deleveryDate}', customerId={customerId}, status='{status}',cost = {cost} where id={id};";
+            MySqlCommand cmd = new MySqlCommand(cmdText,con);
+            cmd.ExecuteNonQuery();
+            con.Close();
+         }
+         
+         public void UpdateMyOrder(int id, string deleveryDate)
+         {
+            var con = this.CreateConnection();
+            string cmdText= $"update orders set deleveryDate='{deleveryDate}' where id={id};";
             MySqlCommand cmd = new MySqlCommand(cmdText,con);
             cmd.ExecuteNonQuery();
             con.Close();

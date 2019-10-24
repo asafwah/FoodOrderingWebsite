@@ -150,14 +150,13 @@ namespace FoodOrderingWebsite.Controllers
             {
                 string pictureUrl = null;
                 if(picture.Length > 0)
-                {
+                    {
                     var fileName = Path.GetFileName(picture.FileName);
                     var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot/images", fileName);
                     var stream = new FileStream(filePath, FileMode.Create);
                     picture.CopyTo(stream);
                     pictureUrl = "/images/" + fileName;
                     }
-
                     Recipe newrecipe = new Recipe();
                     newrecipe.Name = name;
                     newrecipe.Description = description;
@@ -200,17 +199,18 @@ namespace FoodOrderingWebsite.Controllers
             if(user == "admin")
             {
                 string pictureUrl = null;
-                if (picture == null)
-                {
-                    pictureUrl =oldPictureUrl;
-                }
-                else if(picture.Length > 0)
+                
+                if(picture !=null)
                 {
                 var fileName = Path.GetFileName(picture.FileName);
                 var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot/images", fileName);
                 var stream = new FileStream(filePath, FileMode.Create);
                 picture.CopyTo(stream);
                 pictureUrl = "/images/" + fileName;
+                }
+                else
+                {
+                    pictureUrl =oldPictureUrl;
                 }
                 FoodOrdering fo = new FoodOrdering();
                 fo.UpdateRecipe(id,name,description,ingredients, category, price, rating, pictureUrl);

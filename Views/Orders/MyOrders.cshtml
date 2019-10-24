@@ -1,0 +1,48 @@
+@{
+    var myOrders = (List<Order>)ViewData["myOrders"];
+    var allOrderRecipes = (List<OrderRecipes>)ViewData["allOrderRecipes"];
+    ViewData["title"] = "My Orders";
+}
+<h2>My Orders</h2>
+@if (myOrders.Count()== 0)
+{
+    <h3>You Don't Have Any Order, check Your Cart</h3>
+}
+<a href="/Orders/Cart" class="btn btn-primary">My Cart</a>
+
+@for (int i = 0; i < myOrders.Count(); i++)
+{
+     <div class="card" style="border: 2px solid lightgrey">
+        <div class="card-body">
+            <h3>ID: @myOrders[i].Id</h3>
+           <p>CreationDate: @myOrders[i].CreationDate</p>
+           <p>Delevery Date: @myOrders[i].DeleveryDate</p>
+           <p>Status: @myOrders[i].Status</p>
+           <p>Cost: @myOrders[i].Cost</p>
+            <h3>Order Recipes: </h3>
+           @for (int e = 0; e < allOrderRecipes.Count(); e++)
+           {
+
+                if (@allOrderRecipes[e].OrderId == @myOrders[i].Id)
+                {
+                        <h3>@allOrderRecipes[e].RecipeName</h3>
+                        <p>Quantity: @allOrderRecipes[e].Quantity</p>
+                }
+           }
+           
+        </div>
+        <div class="card-footer">
+            <form action="/Orders/updateMyOrder" method="get">
+                <input type="hidden" name="id" value="@myOrders[i].Id">
+                <input type="submit" class="btn btn-primary" value="Update">
+            </form>
+
+            <form action="/Orders/deleteMyOrder" method="post">
+                <input type="hidden" name="id" value="@myOrders[i].Id">
+                <input type="submit" class="btn btn-danger" value="Delete">
+            </form>
+        </div>
+     </div>  
+}
+
+

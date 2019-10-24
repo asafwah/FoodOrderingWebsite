@@ -3026,6 +3026,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "Views/Orders/UpdateMyOrder.cshtml",
+      "TargetPath": "Views/Orders/UpdateMyOrder.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "Views/Customers/addCustomer.cshtml",
       "TargetPath": "Views/Customers/addCustomer.cshtml",
       "FileKind": "mvc"
@@ -3058,6 +3063,11 @@
     {
       "FilePath": "Views/Orders/Cart.cshtml",
       "TargetPath": "Views/Orders/Cart.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "Views/Orders/MyOrders.cshtml",
+      "TargetPath": "Views/Orders/MyOrders.cshtml",
       "FileKind": "mvc"
     },
     {

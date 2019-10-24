@@ -5,23 +5,29 @@
 
 <h1>@ViewData["title"]</h1>
 
-<form action="/home/updateRecipe" method="post">
+<form action="/home/updateRecipe" method="post" enctype="multipart/form-data">
     <div class="form-group">
+        <p>Recipe ID</p>
         <input readonly type="number" name="id" value="@recipe.Id" class=form-control placeholder="Recipe ID">
     </div>
     <div class="form-group">
+        <p>Recipe Name</p>
         <input type="text" name="name" value="@recipe.Name" class=form-control placeholder="Recipe Name">
     </div>
     <div class="form-group">
+        <p>Recipe Description</p>
         <input type="text" name="description" value="@recipe.Description" class=form-control placeholder="Recipe Description">
     </div>
     <div class="form-group">
+        <p>Recipe Ingredients</p>
         <input type="text" name="ingredients" value="@recipe.Ingredients" class=form-control placeholder="Recipe Ingredients">
     </div>
     <div class="form-group">
+        <p>Recipe Price</p>
         <input type="double" name="price" value="@recipe.Price" class=form-control placeholder="Recipe Price">
     </div>
     <div class="form-group">
+        <p>Recipe Rating</p>
         <input type="double" name="rating" value="@recipe.Rating" class=form-control placeholder="Recipe Rating">
     </div>
     <img src="@recipe.PictureUrl" alt="" width="100">
@@ -29,6 +35,7 @@
     <input type="file" class="form-control" name="picture" placeholder="Picture">
     <input type="hidden" name="oldPictureUrl" value="@recipe.PictureUrl">
     </div>
+    <p>Recipe Category</p>
         
             @if (@recipe.Category=="Appetizer")
             {

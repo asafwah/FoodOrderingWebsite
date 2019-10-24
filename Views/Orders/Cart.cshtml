@@ -38,7 +38,7 @@ else
     int customerId = @carts[0].CustomerId;
     <form action="/Orders/OrderCart" method="post">
         <div class="form-group">
-            <input type="hidden" name="id" value="@customerId">
+            <input type="hidden" name="customerId" value="@customerId">
         </div>
         <input type="submit" class="btn btn-primary" value="Order">
     </form>

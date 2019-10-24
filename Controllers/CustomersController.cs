@@ -97,9 +97,7 @@ namespace FoodOrderingWebsite.Controllers
             else
             {
                 return Redirect("/auth/adminLogin");
-            }
-
-            
+            }            
         }
         
         public RedirectResult DeleteCustomer(int id)
@@ -108,16 +106,15 @@ namespace FoodOrderingWebsite.Controllers
             if(user == "admin")
             {
                 FoodOrdering os = new FoodOrdering();
+                os.clearCustomerCart(id);
+                os.deleteCustomerOrders(id);
                 os.deleteCustomer(id);
                 return Redirect("/Customers/Index");
             }
             else
             {
                 return Redirect("/auth/adminLogin");
-            }
-
-
-            
+            }           
         }
         public IActionResult UpdateCustomer(int id)
         {
