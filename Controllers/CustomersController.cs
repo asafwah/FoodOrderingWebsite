@@ -108,7 +108,10 @@ namespace FoodOrderingWebsite.Controllers
                 FoodOrdering os = new FoodOrdering();
                 os.clearCustomerCart(id);
                 os.deleteCustomerOrders(id);
-                os.deleteCustomer(id);
+                if (id>1)
+                {
+                    os.deleteCustomer(id);
+                }                
                 return Redirect("/Customers/Index");
             }
             else
